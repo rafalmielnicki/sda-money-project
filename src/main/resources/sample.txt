@@ -1,0 +1,5 @@
+Przykładowy tekst
+Przykładowy tekst 2
+Tak
+Nie
+***
