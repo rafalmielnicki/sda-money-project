@@ -5,30 +5,74 @@ import java.math.BigDecimal;
 public class Money {
 
     private BigDecimal amount;
-    private Currency currency = Currency.PLN;
+    private Currency currency;
 
-    public Money() {
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public Money(Currency currency) {
         this.amount = BigDecimal.ZERO;
+        this.currency = currency;
     }
 
-    public Money(BigDecimal amount) {
+    public Money(BigDecimal amount, Currency currency) {
         this.amount = amount;
+        this.currency = currency;
     }
 
-    public Money(double amount) {
+    public Money(Double amount, Currency currency) {
         this.amount = BigDecimal.valueOf(amount);
+        this.currency = currency;
     }
 
-    public Money(long amount) {
+    public Money(Long amount, Currency currency) {
         this.amount = BigDecimal.valueOf(amount);
+        this.currency = currency;
     }
 
-    public void addMoney(Money other) {
-        amount = amount.add(other.amount);
+    public void addMoney(BigDecimal amount) {//dodanie pieniędzy do kupki
+        this.amount = this.amount.add(amount);
     }
 
-    public void substractMoney(Money other) {
-        amount = amount.subtract(other.amount);
+    public void addMoney(Money moneyToAdd) {
+        this.amount = this.amount.add(moneyToAdd.amount);
+    }
+
+    public boolean isEnoughAmount(Money money) {
+        return this.amount.compareTo(money.amount)>=0;
+    }
+
+    public boolean isEnoughAmount(BigDecimal amount) {
+        return this.amount.compareTo(amount)>=0;
+    }
+
+    public boolean substractMoney(BigDecimal amount) throws NoEnoughMoneyException {//dodanie pieniędzy do kupki
+        if (isEnoughAmount(amount)) {
+        this.amount = this.amount.add(amount.negate());
+        return true;
+    } else {
+            System.out.println("Nie masz wystarczającej gotówki do wykonania transakcji");
+            throw new NoEnoughMoneyException();
+        }
+    }
+
+    public boolean substractMoney(Money moneyToRemove) throws NoEnoughMoneyException {
+        if (isEnoughAmount(moneyToRemove)) {
+            this.amount = this.amount.add(moneyToRemove.amount.negate());
+            return true;
+        } else {
+            System.out.println("Nie masz wystarczającej gotówki do wykonania transakcji");
+            throw new NoEnoughMoneyException();
+        }
+    }
+
+    public boolean checkCurrency(Currency currency) {
+        return currency.equals(this.currency);
     }
 
     public String toString() {

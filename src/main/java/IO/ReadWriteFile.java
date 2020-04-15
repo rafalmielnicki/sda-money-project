@@ -50,7 +50,7 @@ public class ReadWriteFile {
             e.printStackTrace();
         }
 
-        //Pathern quote jeżeli chcemy wyszukiwać elementy z gwiazdkami to trzeba skorzystać z tego
+        //Pattern quote jeżeli chcemy wyszukiwać elementy z gwiazdkami to trzeba skorzystać z tego
 
     }
 

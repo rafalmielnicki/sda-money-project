@@ -11,7 +11,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wpisz imię i nazwisko");
         String informacje = scanner.nextLine();
-        String pattern = "^([A-Z][a-z]*)\\s+([A-Z][a-z]*)$";
+        String pattern = "^([A-Z][a-z]*)\\s+([A-Z][a-z]*)$";//zastosowanie ^....$ daje dopasowanie ścisłe
+        //np. dla wyrażenia ‚^miarka$’ dopasuje nam tylko i wyłącznie słowo miarka.
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(informacje);
         if (m.find()) {

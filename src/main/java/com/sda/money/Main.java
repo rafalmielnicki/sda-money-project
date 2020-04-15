@@ -2,20 +2,30 @@ package com.sda.money;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoEnoughMoneyException {
         Person frank = new Person("Frank");
-        frank.receiveMoney(new Money(10));
+        Person martin = new Person("Martin");
+        Person jozef = new Person("Jozef");
 
-        Person greg = new Person("Greg");
-        greg.receiveMoney(new Money(20));
+        frank.receiveMoney(50d, Currency.PLN);
+        frank.receiveMoney(100d, Currency.EUR);
+
+        martin.receiveMoney(200d, Currency.PLN);
+        jozef.receiveMoney(500d, Currency.EUR);
 
         System.out.println(frank);
-        System.out.println(greg);
+        System.out.println(martin);
+        System.out.println(jozef);
 
-        greg.giveMoney(frank, new Money(45));
+        frank.giveMoney(martin, 10d, Currency.PLN);
+        martin.giveMoney(frank, 20d, Currency.PLN);
+        jozef.giveMoney(frank, 100d, Currency.EUR);
+        jozef.giveMoney(martin, 400d, Currency.EUR);
 
+        System.out.println("=============");
         System.out.println(frank);
-        System.out.println(greg);
+        System.out.println(martin);
+        System.out.println(jozef);
 
     }
 
