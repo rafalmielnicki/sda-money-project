@@ -1,5 +1,5 @@
 package com.sda.money;
 
-public class NoEnoughMoneyException extends Throwable {
+public class NoEnoughMoneyException extends Exception {
 
 }

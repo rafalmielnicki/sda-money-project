@@ -20,7 +20,7 @@ public class Main {
         frank.giveMoney(martin, 10d, Currency.PLN);
         martin.giveMoney(frank, 20d, Currency.PLN);
         jozef.giveMoney(frank, 100d, Currency.EUR);
-        jozef.giveMoney(martin, 400d, Currency.EUR);
+        jozef.giveMoney(martin, 4000d, Currency.EUR);
 
         System.out.println("=============");
         System.out.println(frank);
@@ -28,5 +28,8 @@ public class Main {
         System.out.println(jozef);
 
     }
+
+    //runtime exception używamy do wyjątku, którego się nie spodziewamy,
+    // którego nigdy nie powinno być (jeżeli ktoś źle użyje naszego kodu)
 
 }

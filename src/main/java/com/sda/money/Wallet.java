@@ -13,27 +13,33 @@ public class Wallet {
         this.monies = new ArrayList<>();
     }
 
-    public void putMoney(BigDecimal other, Currency currency) {//włóż pieniądze do portfela
+    private boolean isCurrencyInWallet(BigDecimal other, Currency currency, String addOrSubstract)
+            throws NoEnoughMoneyException {
         boolean isCurrencyInWallet = false;
         for (int i = 0; i < monies.size(); i++) {
             if (monies.get(i).checkCurrency(currency)) {
-                monies.get(i).addMoney(other);
+                if (addOrSubstract.equals("add")) {
+                    monies.get(i).addMoney(other);
+                } else if (addOrSubstract.equals("substract")) {
+                    monies.get(i).substractMoney(other);
+                }
                 isCurrencyInWallet = true;
             }
         }
+        return isCurrencyInWallet;
+    }
+
+    public void putMoney(BigDecimal other, Currency currency)
+            throws NoEnoughMoneyException {//włóż pieniądze do portfela
+        boolean isCurrencyInWallet = isCurrencyInWallet(other, currency, "add");
         if (!isCurrencyInWallet) {
             this.monies.add(new Money(other, currency));
         }
     }
 
-    public void takeMoney(BigDecimal other, Currency currency) throws NoEnoughMoneyException {//wyciągnij pieniądze z portfela
-        boolean isCurrencyInWallet = false;
-        for (int i = 0; i < monies.size(); i++) {
-            if (monies.get(i).checkCurrency(currency)) {
-                monies.get(i).substractMoney(other);
-                isCurrencyInWallet = true;
-            }
-        }
+    public void takeMoney(BigDecimal other, Currency currency)
+            throws NoEnoughMoneyException {//wyciągnij pieniądze z portfela
+        boolean isCurrencyInWallet = isCurrencyInWallet(other, currency, "substract");
             if (!isCurrencyInWallet) {
                 System.out.println("Nie ma dostępnej takiej waluty w źródłowym portfelu");
                 throw new InputMismatchException();

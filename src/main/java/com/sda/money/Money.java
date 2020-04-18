@@ -7,32 +7,26 @@ public class Money {
     private BigDecimal amount;
     private Currency currency;
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
     public Currency getCurrency() {
         return currency;
-    }
-
-    public Money(Currency currency) {
-        this.amount = BigDecimal.ZERO;
-        this.currency = currency;
     }
 
     public Money(BigDecimal amount, Currency currency) {
         this.amount = amount;
         this.currency = currency;
+        validateMoney();
+    }
+
+    public Money(Currency currency) {
+        this(BigDecimal.ZERO, currency);
     }
 
     public Money(Double amount, Currency currency) {
-        this.amount = BigDecimal.valueOf(amount);
-        this.currency = currency;
+        this(BigDecimal.valueOf(amount), currency);
     }
 
     public Money(Long amount, Currency currency) {
-        this.amount = BigDecimal.valueOf(amount);
-        this.currency = currency;
+        this(BigDecimal.valueOf(amount), currency);
     }
 
     public void addMoney(BigDecimal amount) {//dodanie pieniędzy do kupki
@@ -77,6 +71,12 @@ public class Money {
 
     public String toString() {
         return String.format("%s %s", amount.toString(), currency.toString());
+    }
+
+    private void validateMoney() {
+        if (BigDecimal.ZERO.compareTo(this.amount) > 0) {
+            throw new InwalidAmountException();
+        }
     }
 
 }
