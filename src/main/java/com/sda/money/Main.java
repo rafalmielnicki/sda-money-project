@@ -1,5 +1,8 @@
 package com.sda.money;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) throws NoEnoughMoneyException {
@@ -26,6 +29,32 @@ public class Main {
         System.out.println(frank);
         System.out.println(martin);
         System.out.println(jozef);
+
+        frank.addItemToMyOwnList("bicycle");
+        frank.addItemToMyOwnList("skuter");
+        frank.addItemToMyOwnList("hulajnoga");
+
+        Money moneyForBicyclePLN = new Money(500d, Currency.PLN);
+        Money moneyForBicycleEUR = new Money(100d, Currency.EUR);
+        Money moneyForBicycleUSD = new Money(110d, Currency.USD);
+
+        List<Money> moneyForBicycle = new ArrayList<>();
+        moneyForBicycle.add(moneyForBicyclePLN);
+        moneyForBicycle.add(moneyForBicycleEUR);
+        moneyForBicycle.add(moneyForBicycleUSD);
+
+        frank.addItem(String.valueOf(new ItemOffer("bicycle", moneyForBicycle)));
+
+        Money moneyBicycleEUR = new Money(100d, Currency.EUR);
+
+        List<Money> moneyBicycle = new ArrayList<>();
+        moneyBicycle.add(moneyBicycleEUR);
+
+        martin.addItemToSell(new ItemOffer("bicycle", moneyBicycle));
+
+        martin.buyItem(frank, "bicycle");
+
+        System.out.println(martin);
 
     }
 
