@@ -10,29 +10,29 @@ public class Main {
         Person martin = new Person("Martin");
         Person jozef = new Person("Jozef");
 
-        frank.receiveMoney(50d, Currency.PLN);
-        frank.receiveMoney(100d, Currency.EUR);
+        frank.receiveMoney(new Money(10, Currency.PLN));
+        frank.receiveMoney(new Money(100, Currency.EUR));
 
-        martin.receiveMoney(200d, Currency.PLN);
-        jozef.receiveMoney(500d, Currency.EUR);
+        martin.receiveMoney(new Money(200, Currency.PLN));
+        jozef.receiveMoney(new Money(500, Currency.EUR));
 
         System.out.println(frank);
         System.out.println(martin);
         System.out.println(jozef);
 
-        frank.giveMoney(martin, 10d, Currency.PLN);
-        martin.giveMoney(frank, 20d, Currency.PLN);
-        jozef.giveMoney(frank, 100d, Currency.EUR);
-        jozef.giveMoney(martin, 4000d, Currency.EUR);
+        frank.giveMoney(martin, new Money(10, Currency.PLN));
+        martin.giveMoney(frank, new Money(20, Currency.PLN));
+        jozef.giveMoney(frank, new Money(100, Currency.EUR));
+        jozef.giveMoney(martin, new Money(4000, Currency.EUR));
 
         System.out.println("=============");
         System.out.println(frank);
         System.out.println(martin);
         System.out.println(jozef);
 
-        frank.addItemToMyOwnList("bicycle");
-        frank.addItemToMyOwnList("skuter");
-        frank.addItemToMyOwnList("hulajnoga");
+        martin.addItemToMyOwnList("bicycle");
+        martin.addItemToMyOwnList("skuter");
+        martin.addItemToMyOwnList("hulajnoga");
 
         Money moneyForBicyclePLN = new Money(500d, Currency.PLN);
         Money moneyForBicycleEUR = new Money(100d, Currency.EUR);
@@ -43,7 +43,7 @@ public class Main {
         moneyForBicycle.add(moneyForBicycleEUR);
         moneyForBicycle.add(moneyForBicycleUSD);
 
-        frank.addItem(String.valueOf(new ItemOffer("bicycle", moneyForBicycle)));
+        frank.addItemToWishList(new ItemOffer("bicycle", moneyForBicycle));
 
         Money moneyBicycleEUR = new Money(100d, Currency.EUR);
 
@@ -52,7 +52,8 @@ public class Main {
 
         martin.addItemToSell(new ItemOffer("bicycle", moneyBicycle));
 
-        martin.buyItem(frank, "bicycle");
+
+        frank.buyItem(martin, "bicycle");
 
         System.out.println(martin);
 

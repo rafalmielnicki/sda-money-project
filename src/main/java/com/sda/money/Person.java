@@ -1,36 +1,32 @@
 package com.sda.money;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import static com.sda.money.ItemOffer.isOfferIsAcceptable;
+import static com.sda.money.ItemOffer.setOnPrice;
 
 public class Person {//klasa Person ma być odpowiedzialna za interakcję między osobami
 
     private String name;
     private Wallet wallet;
-    private List<String> myOwnItemList;
-    private List<ItemOffer> wishList;
-    private List<ItemOffer> itemsForSale;
+    private List<String> myOwnItemList = new ArrayList<>();
+    private List<ItemOffer> wishList = new ArrayList<>();
+    private List<ItemOffer> itemsForSale = new ArrayList<>();
 
     public Person(String name) {
         this.name = name;
         this.wallet = new Wallet();
-        this.myOwnItemList = new ArrayList<>();
-        this.wishList = new ArrayList<>();
-        this.itemsForSale = new ArrayList<>();
     }
 
-    public void receiveMoney(Double money, Currency currency) throws NoEnoughMoneyException {
-        this.wallet.putMoney(BigDecimal.valueOf(money), currency);
+    public void receiveMoney(Money money){
+        wallet.putMoney(money);
     }
 
-    public void giveMoney(Person other, Double money, Currency currency) {
+    public void giveMoney(Person other, Money money) {
         System.out.println(
-                String.format("%s gives %s%s to %s", name, money, currency.toString(), other.name));
+                String.format("%s gives %s to %s", name, money, other.name));
         try {
-            wallet.takeMoney(BigDecimal.valueOf(money), currency);//wyciągamy pieniądze z portfela
-            other.receiveMoney(money, currency);//dajemy je wybranej osobie
+            wallet.takeMoney(money);//wyciągamy pieniądze z portfela
+            other.receiveMoney(money);//dajemy je wybranej osobie
         } catch (NoEnoughMoneyException e) {
             System.out.println(
                     String.format("%s couldn't give %s to %s", name, money, other.name));
@@ -62,7 +58,7 @@ public class Person {//klasa Person ma być odpowiedzialna za interakcję międz
 
     public void removeItem(String name) {
         this.myOwnItemList.remove(name);
-        this.itemsForSale.remove(name);
+        this.itemsForSale.remove(new ItemOffer(name, null));
     }
 
     private ItemOffer findPurchaseOffer(String item) {
@@ -87,7 +83,7 @@ public class Person {//klasa Person ma być odpowiedzialna za interakcję międz
         if (item == null) return false;
         ItemOffer sellOffer = other.findSaleOffer(item);
         ItemOffer buyOffer = this.findPurchaseOffer(item);
-        if ((isOfferIsAcceptable(buyOffer, sellOffer)) != null) {
+        if ((setOnPrice(buyOffer, sellOffer)) != null) {
             this.removeItem(item);
             other.addItemToMyOwnList(item);
         }

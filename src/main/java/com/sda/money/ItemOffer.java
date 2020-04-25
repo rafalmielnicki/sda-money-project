@@ -28,16 +28,16 @@ public class ItemOffer {
     }
 
     //porównanie ofert
-    public static Money isOfferIsAcceptable(ItemOffer offerBuy, ItemOffer offerSell) {
+    public static Money setOnPrice(ItemOffer offerBuy, ItemOffer offerSell) {
         return offerBuy.getMoneyList().stream()
-                .filter(money -> enoughMoneyForItem(offerSell, money))
-                .findFirst()
+                .filter(money -> offerSell.enoughMoneyForItem(money))
+                .findAny()
                 .orElse(null);
     }
 
-    private static boolean enoughMoneyForItem(ItemOffer offerSell, Money money) {
-        for (int i = 0; i < offerSell.getMoneyList().size(); i++) {
-            Money tempMoney = offerSell.getMoneyList().get(i);
+    private boolean enoughMoneyForItem(Money money) {
+        for (int i = 0; i < this.getMoneyList().size(); i++) {
+            Money tempMoney = this.getMoneyList().get(i);
             if(tempMoney.checkCurrency(money) && money.isEnoughAmount((tempMoney))) return true;
         }
         return false;

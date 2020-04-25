@@ -21,11 +21,11 @@ public class Money {
         this(BigDecimal.ZERO, currency);
     }
 
-    public Money(Double amount, Currency currency) {
+    public Money(double amount, Currency currency) {
         this(BigDecimal.valueOf(amount), currency);
     }
 
-    public Money(Long amount, Currency currency) {
+    public Money(long amount, Currency currency) {
         this(BigDecimal.valueOf(amount), currency);
     }
 
@@ -68,17 +68,11 @@ public class Money {
     }
 
     public boolean checkCurrency(Currency currency) {
-        if (!this.currency.equals(currency)) {
-            throw new WrongCurrencyException();
-        }
-        return true;
+        return this.currency.equals(currency);
     }
 
     public boolean checkCurrency(Money other) {
-        if (!this.currency.equals(other.currency)) {
-            throw new WrongCurrencyException();
-        }
-        return true;
+        return this.currency.equals(other.currency);
     }
 
     public String toString() {
